@@ -1,0 +1,66 @@
+entity Exam {
+	examNr Integer,
+}
+
+entity Examiner {
+	name Name,
+    ldab String,
+}
+
+// an ignored comment
+/** not an ignored comment */
+entity Student {
+	name Name,
+    ldab String,
+    matriculationNumber Integer,
+}
+
+enum Priority {
+	LOW, MEDIUM, HIGH
+}
+
+/**
+ * Task entity.
+ * @author The JHipster team.
+ */
+entity Room {
+	roomNr String,
+    description String
+}
+
+/**
+ * The Employee entity.
+ */
+entity Subject {
+	id Long,
+    acronym String,
+    title String,
+    priority Priority
+
+}
+
+entity TimeSlot {
+	start Instant,
+	duration Long
+}
+
+relationship OneToOne{
+	Exam{occurs} to TimeSlot{schedules},
+    Exam{isTaken} to Student{takes}
+}
+
+relationship OneToMany{
+	Room{locates} to Exam{isLocatedIn}
+}
+
+relationship OneToMany{
+	Exam to Subject
+}
+
+relationship ManyToMany{
+	Subject{isSupervisedBy} to Examiner{supervises}
+}
+
+dto * with mapstruct
+
+service all with serviceImpl
